@@ -13,10 +13,10 @@ public class WeatherAppApplication {
         SpringApplication.run(WeatherAppApplication.class, args);
     }
 
-    @Bean
-    public RestTemplate getRestTemplate(){
-        return new RestTemplate();
-    }
+//    @Bean
+//    public RestTemplate getRestTemplate(){
+//        return new RestTemplate();
+//    }
 //    @Bean
 //    public RestTemplate restTemplate(RestTemplateBuilder builder) {
 //        return builder.build();

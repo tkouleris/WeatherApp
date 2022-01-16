@@ -12,14 +12,18 @@ import org.springframework.web.client.RestTemplate;
 @Controller
 @RequestMapping("/weather/")
 public class WeatherController {
-    @Autowired
-    private RestTemplate restTemplate;
+//    @Autowired
+//    private RestTemplate restTemplate;
 
     @GetMapping(path = "forecast")
-    public ResponseEntity<Object> getWeather(RestTemplateBuilder builder) {
+    public ResponseEntity<Object> getWeather() {
+        System.out.println("HERE");
 //        https://www.youtube.com/watch?v=B792AiYpb50
-        String url = "https://api.openweathermap.org/data/2.5/forecast?id=524901&&appid=93265401429e6e79657b6e0b6d6acb96";;
+        RestTemplate restTemplate = new RestTemplate();
 
+        String url = "https://api.openweathermap.org/data/2.5/forecast?id=524901&&appid=93265401429e6e79657b6e0b6d6acb96";
+//        Object[] customerJson = restTemplate.getForObject(url, Object[].class);
+//        System.out.println(customerJson.toString());
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);//or any other required
         HttpEntity entity = new HttpEntity(headers);
@@ -29,6 +33,6 @@ public class WeatherController {
                 entity,
                 String.class
         );
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        return new ResponseEntity<>(response.getBody(), HttpStatus.OK);
     }
 }
