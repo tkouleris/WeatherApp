@@ -6,6 +6,7 @@ import java.util.Map;
 public class OWMSample {
     long dt;
     MainOWMResult main;
+    List<WeatherDescription> weather;
 
     public long getDt() {
         return dt;
@@ -21,5 +22,13 @@ public class OWMSample {
 
     public void setMain(MainOWMResult main) {
         this.main = main;
+    }
+
+    public List<WeatherDescription> getWeather() {
+        return weather;
+    }
+
+    public void setWeather(List<WeatherDescription> weather) {
+        this.weather = weather;
     }
 }

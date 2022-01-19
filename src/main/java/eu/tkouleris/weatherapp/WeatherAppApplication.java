@@ -1,5 +1,6 @@
 package eu.tkouleris.weatherapp;
 
+import com.google.gson.Gson;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +14,10 @@ public class WeatherAppApplication {
         SpringApplication.run(WeatherAppApplication.class, args);
     }
 
+    @Bean
+    public Gson gsonObj(){
+        return new Gson();
+    }
 //    @Bean
 //    public RestTemplate getRestTemplate(){
 //        return new RestTemplate();
