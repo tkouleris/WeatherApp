@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/weather/")
+@RequestMapping("/weather")
 public class WeatherController {
 
     @Autowired
