@@ -3,6 +3,7 @@ package eu.tkouleris.weatherapp.entity;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "city")
 public class City {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

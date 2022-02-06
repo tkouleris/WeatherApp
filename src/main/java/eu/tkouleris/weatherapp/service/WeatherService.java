@@ -38,6 +38,7 @@ public class WeatherService {
         ResponseDTO myWeatherDTO = new ResponseDTO();
         myWeatherDTO.setCity_id(result.getCity().getId());
         myWeatherDTO.setCity_name(result.getCity().getName());
+        myWeatherDTO.setCountry(result.getCity().getCountry());
         List<ResponseWeatherDTO> weatherList = new ArrayList<>();
         for (OWMSample sample: result.getList()) {
             ResponseWeatherDTO weatherDTO = new ResponseWeatherDTO();

@@ -5,6 +5,7 @@ import java.util.List;
 public class ResponseDTO {
     private long city_id;
     private String city_name;
+    private String country;
     private List<ResponseWeatherDTO> weather;
 
     public long getCity_id() {
@@ -29,5 +30,13 @@ public class ResponseDTO {
 
     public void setWeather(List<ResponseWeatherDTO> weather) {
         this.weather = weather;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 }
