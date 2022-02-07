@@ -7,6 +7,7 @@ import eu.tkouleris.weatherapp.exception.EntityExistsException;
 import eu.tkouleris.weatherapp.exception.EntityNotFoundException;
 import eu.tkouleris.weatherapp.repository.CityRepository;
 import eu.tkouleris.weatherapp.repository.UserRepository;
+import eu.tkouleris.weatherapp.service.CityService;
 import org.apache.juli.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,33 +24,20 @@ public class CityController {
     UserRepository userRepository;
 
     @Autowired
-    CityRepository cityRepository;
+    CityService cityService;
 
     @PostMapping(path = "user/city/{city_id}", produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> setCityToUser(@PathVariable("city_id") long city_id, Authentication authentication) throws Exception {
-        User LoggedInUser = userRepository.findByUsername(authentication.getName());
-        City city = cityRepository.findById(city_id);
-        if(city == null){
-            throw new EntityNotFoundException("City not found");
-        }
-        City existingRecord = cityRepository.findByUserIdAndByCityId(LoggedInUser.getId(),city_id);
-        if(existingRecord != null){
-            throw new EntityExistsException("City is already combined with user");
-        }
-        cityRepository.addCityToUser(city.getId(), LoggedInUser.getId());
+        User loggedInUser = userRepository.findByUsername(authentication.getName());
+        cityService.subscribeCityToUser(loggedInUser.getId(), city_id);
 
         return new ResponseEntity<Object>(null, HttpStatus.OK);
     }
 
     @DeleteMapping(path = "user/city/{city_id}", produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> removeCityFromUser(@PathVariable("city_id") long city_id, Authentication authentication) throws Exception {
-        User LoggedInUser = userRepository.findByUsername(authentication.getName());
-        City existingRecord = cityRepository.findByUserIdAndByCityId(LoggedInUser.getId(),city_id);
-        if(existingRecord == null){
-            throw new EntityNotFoundException("City not combined with user");
-        }
-        cityRepository.deleteCityFromUser(city_id, LoggedInUser.getId());
-
+        User loggedInUser = userRepository.findByUsername(authentication.getName());
+        cityService.unsubscribeCityFromUser(loggedInUser.getId(), city_id);
         return new ResponseEntity<Object>(null, HttpStatus.OK);
     }
 }
