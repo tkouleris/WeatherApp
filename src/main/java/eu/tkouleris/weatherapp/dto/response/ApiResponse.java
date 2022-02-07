@@ -1,8 +1,6 @@
 package eu.tkouleris.weatherapp.dto.response;
 
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -10,15 +8,12 @@ import java.util.Map;
 public class ApiResponse {
     private Map<String, Object> body = new LinkedHashMap<>();
 
-    public ApiResponse()
-    {
-        body.put("timestamp", null);
+    public ApiResponse(){
         body.put("message", null);
         body.put("data", null);
     }
 
-    public void setMessage(String message)
-    {
+    public void setMessage(String message){
         body.put("message", message);
     }
 
@@ -28,9 +23,7 @@ public class ApiResponse {
     }
 
 
-    public Map<String,Object> getBodyResponse()
-    {
-        body.put("timestamp", LocalDateTime.now());
+    public Map<String,Object> getBodyResponse(){
         return body;
     }
 }
