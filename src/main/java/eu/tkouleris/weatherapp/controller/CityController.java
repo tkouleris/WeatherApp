@@ -10,6 +10,7 @@ import eu.tkouleris.weatherapp.repository.UserRepository;
 import eu.tkouleris.weatherapp.service.CityService;
 import org.apache.juli.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/weather")
 public class CityController {
-    
+
     @Autowired
     UserRepository userRepository;
 

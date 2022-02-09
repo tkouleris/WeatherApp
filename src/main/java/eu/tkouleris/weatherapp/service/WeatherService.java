@@ -6,6 +6,7 @@ import eu.tkouleris.weatherapp.dto.response.ResponseWeatherDTO;
 import eu.tkouleris.weatherapp.jsonModel.OWMResult;
 import eu.tkouleris.weatherapp.jsonModel.OWMSample;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -19,9 +20,12 @@ public class WeatherService {
     @Autowired
     Gson gsonObj;
 
+    @Value("${owm_key}")
+    private String owm_key;
+
     public ResponseDTO getFiveDaysForecast(long owm_id){
         RestTemplate restTemplate = new RestTemplate();
-        String url = "https://api.openweathermap.org/data/2.5/forecast?id="+owm_id+"&appid=93265401429e6e79657b6e0b6d6acb96&units=metric";
+        String url = "https://api.openweathermap.org/data/2.5/forecast?id="+owm_id+"&appid="+this.owm_key+"&units=metric";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);//or any other required
