@@ -27,4 +27,10 @@ public interface CityRepository extends CrudRepository<City, Long> {
     @Modifying
     @Query(value = "DELETE FROM user_city WHERE city_id = ?1 AND user_id = ?2", nativeQuery = true)
     void deleteCityFromUser(long city_id, long user_id);
+
+    @Query(value="SELECT * FROM city GROUP BY country ORDER BY country", nativeQuery = true)
+    List<City> getCountries();
+
+    @Query(value = "SELECT * FROM city WHERE country = ?1", nativeQuery = true)
+    List<City> getCitiesByCountry(String country);
 }

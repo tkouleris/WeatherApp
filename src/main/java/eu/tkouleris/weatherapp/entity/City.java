@@ -14,6 +14,8 @@ public class City {
 
     private long owm_id;
 
+    private String country;
+
     public long getId() {
         return id;
     }
@@ -36,5 +38,13 @@ public class City {
 
     public void setOwm_id(long owm_id) {
         this.owm_id = owm_id;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 }

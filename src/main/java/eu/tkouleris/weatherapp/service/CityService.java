@@ -7,6 +7,9 @@ import eu.tkouleris.weatherapp.repository.CityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class CityService {
 
@@ -31,5 +34,19 @@ public class CityService {
             throw new EntityNotFoundException("User not subscribed to this city");
         }
         cityRepository.deleteCityFromUser(city_id, user_id);
+    }
+
+    public List<String> getAllCountries(){
+        List<String> countries = new ArrayList<>();
+        List<City> cities = cityRepository.getCountries();
+        for (City city: cities) {
+            countries.add(city.getCountry());
+        }
+
+        return countries;
+    }
+
+    public List<City> getFilteredCities(String country){
+        return cityRepository.getCitiesByCountry(country);
     }
 }

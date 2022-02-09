@@ -17,14 +17,29 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/weather")
 public class CityController {
+    
     @Autowired
     UserRepository userRepository;
 
     @Autowired
     CityService cityService;
+
+    @GetMapping(path = "city/countries", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> getAllCountries(){
+        List<String> countries = cityService.getAllCountries();
+        return new ResponseEntity<Object>(countries, HttpStatus.OK);
+    }
+
+    @GetMapping(path = "city/{country}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> getFilteredCountries(@PathVariable("country") String country){
+        List<City> cities = cityService.getFilteredCities(country);
+        return new ResponseEntity<Object>(cities, HttpStatus.OK);
+    }
 
     @PostMapping(path = "user/city/{city_id}", produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> setCityToUser(@PathVariable("city_id") long city_id, Authentication authentication) throws Exception {
