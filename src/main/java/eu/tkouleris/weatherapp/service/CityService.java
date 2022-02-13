@@ -1,14 +1,16 @@
 package eu.tkouleris.weatherapp.service;
 
+import eu.tkouleris.weatherapp.dto.response.CountryDto;
 import eu.tkouleris.weatherapp.entity.City;
 import eu.tkouleris.weatherapp.exception.EntityExistsException;
 import eu.tkouleris.weatherapp.exception.EntityNotFoundException;
 import eu.tkouleris.weatherapp.repository.CityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class CityService {
@@ -36,13 +38,16 @@ public class CityService {
         cityRepository.deleteCityFromUser(city_id, user_id);
     }
 
-    public List<String> getAllCountries(){
-        List<String> countries = new ArrayList<>();
-        List<City> cities = cityRepository.getCountries();
+    public List<CountryDto> getAllCountries(){
+        List<CountryDto> countries = new ArrayList<>();
+        List<City> cities = cityRepository.getCountries(Sort.by(Sort.Direction.ASC, "country"));
         for (City city: cities) {
-            countries.add(city.getCountry());
+            Locale l = new Locale("", city.getCountry());
+            CountryDto c = new CountryDto();
+            c.setFullName(l.getDisplayCountry());
+            c.setAbbreviation(city.getCountry());
+            countries.add(c);
         }
-
         return countries;
     }
 

@@ -1,6 +1,7 @@
 package eu.tkouleris.weatherapp.repository;
 
 import eu.tkouleris.weatherapp.entity.City;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -28,8 +29,8 @@ public interface CityRepository extends CrudRepository<City, Long> {
     @Query(value = "DELETE FROM user_city WHERE city_id = ?1 AND user_id = ?2", nativeQuery = true)
     void deleteCityFromUser(long city_id, long user_id);
 
-    @Query(value="SELECT * FROM city GROUP BY country ORDER BY country", nativeQuery = true)
-    List<City> getCountries();
+    @Query(value="SELECT c FROM City c GROUP BY c.country")
+    List<City> getCountries(Sort sort);
 
     @Query(value = "SELECT * FROM city WHERE country = ?1", nativeQuery = true)
     List<City> getCitiesByCountry(String country);

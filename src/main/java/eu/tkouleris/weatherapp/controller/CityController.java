@@ -1,5 +1,6 @@
 package eu.tkouleris.weatherapp.controller;
 
+import eu.tkouleris.weatherapp.dto.response.CountryDto;
 import eu.tkouleris.weatherapp.dto.response.ResponseDTO;
 import eu.tkouleris.weatherapp.entity.City;
 import eu.tkouleris.weatherapp.entity.User;
@@ -18,6 +19,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -32,7 +34,7 @@ public class CityController {
 
     @GetMapping(path = "city/countries", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> getAllCountries(){
-        List<String> countries = cityService.getAllCountries();
+        List<CountryDto> countries = cityService.getAllCountries();
         return new ResponseEntity<Object>(countries, HttpStatus.OK);
     }
 
