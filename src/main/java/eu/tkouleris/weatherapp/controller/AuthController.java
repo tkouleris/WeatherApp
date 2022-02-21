@@ -1,6 +1,7 @@
 package eu.tkouleris.weatherapp.controller;
 
 import eu.tkouleris.weatherapp.dto.response.ApiResponse;
+import eu.tkouleris.weatherapp.dto.response.ChangePasswordDto;
 import eu.tkouleris.weatherapp.dto.response.LoginDto;
 import eu.tkouleris.weatherapp.entity.User;
 import eu.tkouleris.weatherapp.repository.UserRepository;
@@ -50,6 +51,17 @@ public class AuthController {
     public ResponseEntity<Object> register(@RequestBody User user) throws Exception{
         User newUser = userCrudService.createNewUser(user);
         apiResponse.setMessage("User created!");
+        apiResponse.setData(newUser);
+
+        return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.CREATED);
+    }
+
+    @PostMapping(path = "/password", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<Object> changePassword(@RequestBody ChangePasswordDto changePassword, Authentication authentication) throws Exception{
+        User loggedInUser = userRepository.findByUsername(authentication.getName());
+        loggedInUser.setPassword(changePassword.getPassword());
+        User newUser = userCrudService.changePassword(loggedInUser);
+        apiResponse.setMessage("Password Changed!");
         apiResponse.setData(newUser);
 
         return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.CREATED);

@@ -15,10 +15,9 @@ public class UserCrudService {
     private UserRepository userRepository;
 
 
-    public User createNewUser(User user) throws Exception
-    {
+    public User createNewUser(User user) throws Exception {
         System.out.println("I AM HERE");
-        if(user_exists(user)) throw new Exception("User already exists!");
+        if (user_exists(user)) throw new Exception("User already exists!");
 
         String userEmail = user.getEmail().trim();
         String userUsername = user.getUsername().trim();
@@ -32,7 +31,7 @@ public class UserCrudService {
          *but does not check the specific domain against a list (especially since
          *there are so many of them now).
          */
-        boolean emailIsNotValid = (userEmail == null ) || !userEmail.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
+        boolean emailIsNotValid = (userEmail == null) || !userEmail.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
 
         /* Password Restriction
          * ------------------------
@@ -42,20 +41,19 @@ public class UserCrudService {
          * Contains at least one char within a set of special chars (@#%$^ etc.)
          * Does not contain space, tab, etc.
          */
-        boolean passwordIsNotValid = (userPassword == null )
+        boolean passwordIsNotValid = (userPassword == null)
                 || !userPassword.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,20}");
 
-        if(usernameIsNotValid) throw new Exception("Username not set or not valid!");
-        if(passwordIsNotValid ) throw new Exception("Password not set or not valid");
-        if(emailIsNotValid) throw new Exception("Email not set or not valid!");
+        if (usernameIsNotValid) throw new Exception("Username not set or not valid!");
+        if (passwordIsNotValid) throw new Exception("Password not set or not valid");
+        if (emailIsNotValid) throw new Exception("Email not set or not valid!");
 
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
-    public User changePassword(User user) throws Exception
-    {
+    public User changePassword(User user) throws Exception {
         String userPassword = user.getPassword().trim();
         /* Password Restriction
          * ------------------------
@@ -65,19 +63,18 @@ public class UserCrudService {
          * Contains at least one char within a set of special chars (@#%$^ etc.)
          * Does not contain space, tab, etc.
          */
-        boolean passwordIsNotValid = (userPassword == null )
+        boolean passwordIsNotValid = (userPassword == null)
                 || !userPassword.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,20}");
 
-        if(passwordIsNotValid ) throw new Exception("Password not set or not valid");
+        if (passwordIsNotValid) throw new Exception("Password not set or not valid");
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
-    private Boolean user_exists(User user)
-    {
-        if(userRepository.findByUsername(user.getUsername()) != null) return true;
-        if(userRepository.findByEmail(user.getEmail()) != null) return true;
+    private Boolean user_exists(User user) {
+        if (userRepository.findByUsername(user.getUsername()) != null) return true;
+        if (userRepository.findByEmail(user.getEmail()) != null) return true;
         return false;
     }
 }
