@@ -16,7 +16,6 @@ public class UserCrudService {
 
 
     public User createNewUser(User user) throws Exception {
-        System.out.println("I AM HERE");
         if (user_exists(user)) throw new Exception("User already exists!");
 
         String userEmail = user.getEmail().trim();
