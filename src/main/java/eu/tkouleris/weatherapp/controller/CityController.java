@@ -39,8 +39,8 @@ public class CityController {
     }
 
     @GetMapping(path = "city/{country}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> getFilteredCountries(@PathVariable("country") String country){
-        List<City> cities = cityService.getFilteredCities(country);
+    public ResponseEntity<Object> getFilteredCountries(@PathVariable("country") String country, @RequestParam(required = false) String filtered){
+        List<City> cities = cityService.getFilteredCities(country, filtered);
         return new ResponseEntity<Object>(cities, HttpStatus.OK);
     }
 

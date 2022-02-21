@@ -5,6 +5,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -32,6 +33,6 @@ public interface CityRepository extends CrudRepository<City, Long> {
     @Query(value="SELECT c FROM City c GROUP BY c.country")
     List<City> getCountries(Sort sort);
 
-    @Query(value = "SELECT * FROM city WHERE country = ?1", nativeQuery = true)
-    List<City> getCitiesByCountry(String country);
+    @Query(value = "SELECT * FROM city WHERE country = :country AND :filtered is null OR city_name LIKE %:filtered%", nativeQuery = true)
+    List<City> getCitiesByCountry(@Param("country") String country, @Param("filtered") String filtered);
 }

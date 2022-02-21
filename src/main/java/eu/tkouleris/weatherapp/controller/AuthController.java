@@ -5,6 +5,7 @@ import eu.tkouleris.weatherapp.dto.response.LoginDto;
 import eu.tkouleris.weatherapp.entity.User;
 import eu.tkouleris.weatherapp.repository.UserRepository;
 import eu.tkouleris.weatherapp.service.CustomUserDetailsService;
+import eu.tkouleris.weatherapp.service.UserCrudService;
 import eu.tkouleris.weatherapp.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,6 +42,18 @@ public class AuthController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserCrudService userCrudService;
+
+    @PostMapping(path = "/register", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<Object> register(@RequestBody User user) throws Exception{
+        User newUser = userCrudService.createNewUser(user);
+        apiResponse.setMessage("User created!");
+        apiResponse.setData(newUser);
+
+        return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.CREATED);
+    }
 
     @PostMapping(value = "/authenticate", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Object> authenticateUser(@RequestBody User user){

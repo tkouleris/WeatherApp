@@ -51,7 +51,7 @@ public class CityService {
         return countries;
     }
 
-    public List<City> getFilteredCities(String country){
-        return cityRepository.getCitiesByCountry(country);
+    public List<City> getFilteredCities(String country, String filter){
+        return cityRepository.getCitiesByCountry(country, filter);
     }
 }
