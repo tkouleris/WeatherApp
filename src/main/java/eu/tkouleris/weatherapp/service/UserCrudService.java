@@ -2,17 +2,19 @@ package eu.tkouleris.weatherapp.service;
 
 import eu.tkouleris.weatherapp.entity.User;
 import eu.tkouleris.weatherapp.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserCrudService {
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+
+    public UserCrudService(PasswordEncoder passwordEncoder, UserRepository userRepository){
+        this.passwordEncoder = passwordEncoder;
+        this.userRepository = userRepository;
+    }
 
 
     public User createNewUser(User user) throws Exception {
@@ -71,9 +73,15 @@ public class UserCrudService {
         return userRepository.save(user);
     }
 
+    public User findByUsername(String username){
+        return this.userRepository.findByUsername(username);
+    }
+
     private Boolean user_exists(User user) {
         if (userRepository.findByUsername(user.getUsername()) != null) return true;
         if (userRepository.findByEmail(user.getEmail()) != null) return true;
         return false;
     }
+
+
 }

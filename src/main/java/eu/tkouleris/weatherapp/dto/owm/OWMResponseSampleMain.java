@@ -1,6 +1,6 @@
-package eu.tkouleris.weatherapp.jsonModel;
+package eu.tkouleris.weatherapp.dto.owm;
 
-public class MainOWMResult {
+public class OWMResponseSampleMain {
     private float temp;
     private float humidity;
 

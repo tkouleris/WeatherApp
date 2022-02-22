@@ -1,6 +1,6 @@
-package eu.tkouleris.weatherapp.jsonModel;
+package eu.tkouleris.weatherapp.dto.owm;
 
-public class OWMCity {
+public class OWMResponseCity {
     private long id;
     private String name;
     private String country;

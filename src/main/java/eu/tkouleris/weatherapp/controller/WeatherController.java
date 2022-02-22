@@ -6,6 +6,7 @@ import eu.tkouleris.weatherapp.entity.City;
 import eu.tkouleris.weatherapp.entity.User;
 import eu.tkouleris.weatherapp.repository.CityRepository;
 import eu.tkouleris.weatherapp.repository.UserRepository;
+import eu.tkouleris.weatherapp.service.UserCrudService;
 import eu.tkouleris.weatherapp.service.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -29,7 +30,7 @@ public class WeatherController {
     CityRepository cityRepository;
 
     @Autowired
-    UserRepository userRepository;
+    UserCrudService userCrudService;
 
     @Autowired
     WeatherService weatherService;
@@ -43,7 +44,7 @@ public class WeatherController {
 
     @GetMapping(path = "/user/forecasts", produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> getUserWeather(Authentication authentication) {
-        User LoggedInUser = userRepository.findByUsername(authentication.getName());
+        User LoggedInUser = userCrudService.findByUsername(authentication.getName());
         List<City> cities = cityRepository.findByUserId(LoggedInUser.getId());
         List<ResponseDTO> weathers = new ArrayList<>();
         for (City city : cities){

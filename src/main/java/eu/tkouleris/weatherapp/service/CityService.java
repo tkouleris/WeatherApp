@@ -8,15 +8,16 @@ import eu.tkouleris.weatherapp.repository.CityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class CityService {
 
-    @Autowired
     CityRepository cityRepository;
+
+    public CityService(CityRepository cityRepository){
+        this.cityRepository = cityRepository;
+    }
 
     public void subscribeCityToUser(long user_id, long city_id) throws EntityNotFoundException, EntityExistsException {
         City city = cityRepository.findById(city_id);

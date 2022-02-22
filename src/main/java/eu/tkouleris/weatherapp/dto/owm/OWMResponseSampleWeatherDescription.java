@@ -1,6 +1,6 @@
-package eu.tkouleris.weatherapp.jsonModel;
+package eu.tkouleris.weatherapp.dto.owm;
 
-public class WeatherDescription {
+public class OWMResponseSampleWeatherDescription {
     private String description;
     private String icon;
 

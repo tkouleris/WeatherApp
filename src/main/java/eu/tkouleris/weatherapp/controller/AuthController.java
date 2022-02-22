@@ -23,8 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/weather")
 public class AuthController {
-//    @Autowired
-//    private UserCrudService userCrudService;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -42,9 +40,6 @@ public class AuthController {
     private LoginDto loginDto;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private UserCrudService userCrudService;
 
     @PostMapping(path = "/register", consumes = "application/json", produces = "application/json")
@@ -58,7 +53,7 @@ public class AuthController {
 
     @PostMapping(path = "/password", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Object> changePassword(@RequestBody ChangePasswordDto changePassword, Authentication authentication) throws Exception{
-        User loggedInUser = userRepository.findByUsername(authentication.getName());
+        User loggedInUser = userCrudService.findByUsername(authentication.getName());
         loggedInUser.setPassword(changePassword.getPassword());
         User newUser = userCrudService.changePassword(loggedInUser);
         apiResponse.setMessage("Password Changed!");
@@ -75,7 +70,7 @@ public class AuthController {
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
         final String jwt = jwtTokenUtil.generateToken(userDetails);
-        User LoggedInUser = userRepository.findByUsername(user.getUsername());
+        User LoggedInUser = userCrudService.findByUsername(user.getUsername());
 
         loginDto.setJwt(jwt);
         loginDto.setUsername(user.getUsername());
