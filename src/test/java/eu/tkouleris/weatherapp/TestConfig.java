@@ -1,12 +1,11 @@
-package eu.tkouleris.weatherapp.config;
+package eu.tkouleris.weatherapp;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-public class AppConfig {
+public class TestConfig {
     @Configuration
-    @PropertySource("application-local.properties")
-    static class local{}
-
+    @PropertySource("classpath:../application-test.properties")
+    static class test{}
 }
