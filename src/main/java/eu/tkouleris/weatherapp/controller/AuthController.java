@@ -15,10 +15,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/weather")
@@ -61,6 +58,7 @@ public class AuthController {
 
         return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.CREATED);
     }
+
 
     @PostMapping(value = "/authenticate", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Object> authenticateUser(@RequestBody User user){

@@ -34,6 +34,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
+//        http.cors().and()
                 .authorizeRequests()
                 .antMatchers("/weather/register").permitAll()
                 .antMatchers("/weather/authenticate").permitAll()

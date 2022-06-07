@@ -35,14 +35,14 @@ public class WeatherController {
     @Autowired
     WeatherService weatherService;
 
-    @GetMapping(path = "forecast/{city_id}", produces=MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/forecast/{city_id}", produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> getWeather(@PathVariable("city_id") long city_id) {
         City city = cityRepository.findById(city_id);
         ResponseDTO myWeatherDTO = weatherService.getFiveDaysForecast(city.getOwm_id());
         return new ResponseEntity<Object>(gsonObj.toJson(myWeatherDTO), HttpStatus.OK);
     }
 
-    @GetMapping(path = "/user/forecasts", produces=MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/forecasts", produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> getUserWeather(Authentication authentication) {
         User LoggedInUser = userCrudService.findByUsername(authentication.getName());
         List<City> cities = cityRepository.findByUserId(LoggedInUser.getId());
