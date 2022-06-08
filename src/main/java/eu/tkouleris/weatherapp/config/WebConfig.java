@@ -11,9 +11,9 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry corsRegistry) {
-        corsRegistry.addMapping("/**")
-                .allowedMethods("*")
-                .allowedOrigins("http://localhost:3000")
+        corsRegistry.addMapping("/weather/**")
+                .allowedMethods("GET", "HEAD", "PUT", "POST", "PATCH", "DELETE", "OPTIONS")
+                .allowedOrigins("http://localhost:3000", "http://weather.tkouleris.eu")
                 .allowedHeaders("*")
                 .exposedHeaders("Authorization")
                 .allowCredentials(true)

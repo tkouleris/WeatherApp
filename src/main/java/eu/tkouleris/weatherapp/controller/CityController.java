@@ -23,13 +23,13 @@ public class CityController {
     @Autowired
     CityService cityService;
 
-    @GetMapping(path = "/countries", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/weather/countries", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> getAllCountries(){
         List<CountryDto> countries = cityService.getAllCountries();
         return new ResponseEntity<Object>(countries, HttpStatus.OK);
     }
 
-    @GetMapping(path = "/city/{country}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/weather/city/{country}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> getFilteredCountries(@PathVariable("country") String country, @RequestParam(required = false) String filtered){
         List<City> cities = cityService.getFilteredCities(country, filtered);
         return new ResponseEntity<Object>(cities, HttpStatus.OK);
@@ -37,29 +37,17 @@ public class CityController {
 
 
     @PostMapping(path = "/weather/city", produces= MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> setCityToUser(@RequestBody CityID city_id, Authentication authentication) throws Exception {
+    public ResponseEntity<Object> setCityToUser(@RequestBody City city, Authentication authentication) throws Exception {
         User loggedInUser = this.userCrudService.findByUsername(authentication.getName());
-        cityService.subscribeCityToUser(loggedInUser.getId(), city_id.getCity_id());
+        cityService.subscribeCityToUser(loggedInUser.getId(), city.getId());
 
         return new ResponseEntity<Object>(null, HttpStatus.OK);
     }
 
-    @DeleteMapping(path = "/city/{city_id}", produces= MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> removeCityFromUser(@PathVariable("city_id") long city_id, Authentication authentication) throws Exception {
+    @PostMapping(path = "/weather/delete", produces= MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> removeCityFromUser(@RequestBody City city, Authentication authentication) throws Exception {
         User loggedInUser = this.userCrudService.findByUsername(authentication.getName());
-        cityService.unsubscribeCityFromUser(loggedInUser.getId(), city_id);
+        cityService.unsubscribeCityFromUser(loggedInUser.getId(), city.getId());
         return new ResponseEntity<Object>(null, HttpStatus.OK);
-    }
-}
-
-class CityID{
-    public long city_id;
-
-    public long getCity_id() {
-        return city_id;
-    }
-
-    public void setCity_id(long city_id) {
-        this.city_id = city_id;
     }
 }
